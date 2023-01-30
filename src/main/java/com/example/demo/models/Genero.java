@@ -26,4 +26,7 @@ public class Genero {
     @OneToMany(mappedBy = "genero")
     private List<Pelicula> peliculas;
 
+
+
+
 }
