@@ -3,27 +3,39 @@ package com.example.demo.controllers;
 import com.example.demo.models.Genero;
 import com.example.demo.services.GeneroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
-
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/genero")
 public class GeneroController {
 
     @Autowired
-    private GeneroService service;
+    private GeneroService generoService;
 
-    @GetMapping(value = "/genero")
-    public List<Genero> listar() {
-        return service.findAll();
+    public GeneroController(GeneroService generoservice) {
+        this.generoService = generoservice;
     }
 
-    @PostMapping(value = "/genero1")
-    public void crear(@RequestBody Genero genero) {
-         service.save(genero);
+    @GetMapping(value = "/listar")
+    public ResponseEntity<List<Genero>> findAll() {
+        return ResponseEntity.ok(generoService.findAll());
+    }
 
+    @PostMapping
+    public ResponseEntity<Genero> save(@RequestBody Genero genero) {
+        return ResponseEntity.ok(generoService.save(genero));
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Genero> findById(@PathVariable Long id) {
+        return generoService.findById(id)
+                .map(genero -> ResponseEntity.ok(genero))
+                .orElse(ResponseEntity.notFound().build());
     }
 }
 

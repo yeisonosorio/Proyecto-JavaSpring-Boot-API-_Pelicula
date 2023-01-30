@@ -4,32 +4,38 @@ import com.example.demo.models.Pelicula;
 import com.example.demo.repositories.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class PeliculaServiceImpl implements PeliculaService {
 
     @Autowired
-    private PeliculaRepository repository;
+    private PeliculaRepository peliculaRepository;
 
-    @Override
-    public List<Pelicula> findAll() {
-        return (List<Pelicula>) repository.findAll();
+    public PeliculaServiceImpl(PeliculaRepository peliculaRepository) {
+        this.peliculaRepository = peliculaRepository;
     }
 
     @Override
-    public Pelicula findBy(Long id) {
-        return repository.findById(id).orElse(null);
+    public List<Pelicula> findAll() {
+        return peliculaRepository.findAll();
+    }
+
+    @Override
+    public Optional<Pelicula> findBy(Long id) {
+        return peliculaRepository.findById(id);
     }
 
     @Override
     public Pelicula save(Pelicula pelicula) {
-        return repository.save(pelicula);
+        return peliculaRepository.save(pelicula);
     }
 
     @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public void deleteById(Long id) {
+        peliculaRepository.deleteById(id);
     }
 }
