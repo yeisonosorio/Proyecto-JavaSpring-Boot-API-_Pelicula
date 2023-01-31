@@ -23,7 +23,6 @@ public class GeneroServiceImpl implements GeneroService {
 
     @Override
     public List<Genero> findAll() {
-
         return generoRepository.findAll();
     }
 
